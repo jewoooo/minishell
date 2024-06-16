@@ -59,20 +59,20 @@ $(NAME) : make_mandatory
 bonus : make_bonus
 
 make_mandatory : $(OBJS)
-	$(AR) $(ARFLAGS) $(NAME) $^
-	touch $@
+	@ $(AR) $(ARFLAGS) $(NAME) $^
+	@ touch $@
 
 make_bonus : $(OBJS) $(OBJS_BONUS)
 	$(AR) $(ARFLAGS) $(NAME) $^
-	touch $@
+	@ touch $@
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@ $(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 	$(RM) $(OBJS) $(OBJS_BONUS)
-	$(RM) make_mandatory
-	$(RM) make_bonus
+	@ $(RM) make_mandatory
+	@ $(RM) make_bonus
 
 fclean : clean
 	$(RM) $(NAME)
