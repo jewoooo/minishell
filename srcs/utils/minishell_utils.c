@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 13:20:12 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/18 13:57:18 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/19 15:55:39 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/minishell.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-
-typedef enum	s_bool
+t_status	er_printf(char *s)
 {
-	FALSE,
-	TRUE,
-}	t_bool;
-
-typedef enum	s_status
-{
-	SUCCESS,
-	FAIL,
-}	t_status;
-
-# include "../libft/libft.h"
-# include "./tokenizing.h"
-
-t_status	er_printf(char *s);
-
-#endif
+	printf("%s", s);
+	return (FAIL);
+}

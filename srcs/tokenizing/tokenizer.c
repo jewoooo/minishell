@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 13:20:12 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/17 15:12:58 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/19 16:27:48 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/minishell.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-
-typedef enum	s_bool
+t_token	*tokenize(char *line)
 {
-	FALSE,
-	TRUE,
-}	t_bool;
+	t_token	*token_lst;
 
-typedef enum	s_status
-{
-	SUCCESS,
-	FAIL,
-}	t_status;
-
-# include "../libft/libft.h"
-# include "./tokenizing.h"
-
-t_status	er_printf(char *s);
-
-#endif
+	if (valid_quotes(line) == FALSE)
+	{
+		er_printf("Quotes errors\n");
+		return (NULL);
+	}
+	token_lst = ft_strtok(line);
+	free(line);
+	return (token_lst);
+}

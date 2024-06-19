@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizing_lst.c                                   :+:      :+:    :+:   */
+/*   tokenizer_lst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 02:43:40 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/17 02:51:52 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:56:16 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 t_token	*token_lst_new(char *value, t_tokentype type)
 {
@@ -56,4 +56,14 @@ void	token_lst_clear(t_token **lst)
 		curr = tmp;
 	}
 	*lst = NULL;
+}
+
+void	token_lst_printf(t_token *lst)
+{
+	while (lst != NULL)
+	{
+		printf("%d\n", lst->type);
+		printf("%s\n", lst->value);
+		lst = lst->next;
+	}
 }

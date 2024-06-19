@@ -6,20 +6,26 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 23:57:57 by jewlee            #+#    #+#              #
-#    Updated: 2024/06/17 02:38:31 by jewlee           ###   ########.fr        #
+#    Updated: 2024/06/19 15:55:10 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
-CFLAGS = -lreadline
+LDFLAGS = -lreadline
 RM = rm -f
 MAKE_CUR = make -C
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
-SRCS = ./main.c \
-	./parsing/parser.c \
-	./parsing/quotes.c
+SRCS = ./srcs/main.c \
+	./srcs/utils/minishell_utils.c \
+	./srcs/tokenizing/tokenizer.c \
+	./srcs/tokenizing/tokenizer_utils.c \
+	./srcs/tokenizing/tokenizer_strtok.c \
+	./srcs/tokenizing/tokenizer_append.c \
+	./srcs/tokenizing/tokenizer_lst.c \
+	./srcs/tokenizing/tokenizer_st.c \
+	./srcs/tokenizing/tokenizer_valid.c 
 
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -L./libft -lft -I./includes
@@ -30,11 +36,11 @@ $(NAME) : make_mandatory
 
 make_mandatory : $(OBJS)
 	$(MAKE_CUR) $(LIBFT_DIR) bonus
-	$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) -o $(NAME)
+	$(CC) $(LDFLAGS) $(OBJS) $(INCLUDES) -o $(NAME)
 	@ touch make_mandatory
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -c $< -o $@
 
 clean :
 	$(MAKE_CUR) $(LIBFT_DIR) clean

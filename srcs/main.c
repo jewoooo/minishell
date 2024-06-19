@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 13:20:12 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/19 16:08:00 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../includes/minishell.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-
-typedef enum	s_bool
+int	main(int argc, char **argv, char **envp)
 {
-	FALSE,
-	TRUE,
-}	t_bool;
+	char	*input;
+	t_token	*token;
 
-typedef enum	s_status
-{
-	SUCCESS,
-	FAIL,
-}	t_status;
-
-# include "../libft/libft.h"
-# include "./tokenizing.h"
-
-t_status	er_printf(char *s);
-
-#endif
+	while (TRUE)
+	{
+		input = readline("minishell$ ");
+		if (input == NULL)
+		{
+			er_printf("Input error");
+			continue ;
+		}
+		add_history(input);
+		token = tokenize(input);
+		if (token == NULL)
+			continue ;
+		token_lst_printf(token);
+		// parser
+		// executor
+	}
+	exit(SUCCESS);
+}

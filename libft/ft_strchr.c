@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:11:48 by jewlee            #+#    #+#             */
-/*   Updated: 2023/10/13 13:57:41 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/18 15:58:44 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	if ((unsigned char)c == '\0' && (unsigned char)*s == '\0')
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }
 /*
 #include <stdio.h>

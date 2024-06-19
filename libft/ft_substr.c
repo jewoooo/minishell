@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:09:31 by jewlee            #+#    #+#             */
-/*   Updated: 2023/10/13 19:16:17 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:52:36 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static char	*sub_dup(char const *s, unsigned int start, size_t len)
 	unsigned int	i;
 
 	aft_s = (char *)malloc(sizeof(char) * (len + 1));
-	if (aft_s == 0)
-		return (0);
+	if (aft_s == NULL)
+		return (NULL);
 	i = 0;
 	while ((size_t)i < len)
 	{
@@ -33,21 +33,21 @@ static char	*sub_dup(char const *s, unsigned int start, size_t len)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*sub_str;
+	char	*sub_str;
 
 	if (len == 0 || (size_t)start >= ft_strlen(s))
 		return (ft_strdup(""));
 	if ((size_t)start + len > ft_strlen(s))
 	{
 		sub_str = sub_dup(s, start, ft_strlen(s) - (size_t)start);
-		if (sub_str == 0)
-			return (0);
+		if (sub_str == NULL)
+			return (NULL);
 	}
 	else
 	{
 		sub_str = sub_dup(s, start, len);
-		if (sub_str == 0)
-			return (0);
+		if (sub_str == NULL)
+			return (NULL);
 	}
 	return (sub_str);
 }

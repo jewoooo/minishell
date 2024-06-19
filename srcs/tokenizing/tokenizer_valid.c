@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   tokenizer_valid.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 13:20:12 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/19 14:00:11 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/19 15:56:23 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/minishell.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-
-typedef enum	s_bool
+t_bool	valid_quotes(char *line)
 {
-	FALSE,
-	TRUE,
-}	t_bool;
+	t_stack	*st;
+	t_bool	flag;
 
-typedef enum	s_status
-{
-	SUCCESS,
-	FAIL,
-}	t_status;
-
-# include "../libft/libft.h"
-# include "./tokenizing.h"
-
-t_status	er_printf(char *s);
-
-#endif
+	st = NULL;
+	while (*line != '\0')
+	{
+		if (*line == '\'' || *line == '\"')
+		{
+			if (st_is_empty(st) || st->quote != *line)
+            	st_push(&st, *line);
+            else
+            	st_pop(&st);
+		}
+		line++;
+	}
+	flag = st_is_empty(st);
+	while (st_is_empty(st) == FALSE)
+		st_pop(&st);
+	return (flag);
+}
