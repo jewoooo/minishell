@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 13:20:12 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:06:15 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,9 @@
 # include <readline/history.h>
 # include <stdlib.h>
 
-typedef enum	s_bool
-{
-	FALSE,
-	TRUE,
-}	t_bool;
-
-typedef enum	s_status
-{
-	SUCCESS,
-	FAIL,
-}	t_status;
-
+# include "./basic.h"
 # include "../libft/libft.h"
+# include "./define.h"
 # include "./tokenizing.h"
 
 t_status	er_printf(char *s);

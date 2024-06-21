@@ -6,13 +6,13 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 02:43:40 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 15:56:16 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/20 11:55:19 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*token_lst_new(char *value, t_tokentype type)
+t_token	*token_lst_new(char *value, t_token_type type)
 {
 	t_token	*new;
 

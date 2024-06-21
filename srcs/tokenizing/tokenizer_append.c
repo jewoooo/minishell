@@ -6,13 +6,13 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 23:00:17 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 15:56:14 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/20 11:55:04 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_status	append_operator(t_tokentype type, char **line,
+t_status	append_operator(t_token_type type, char **line,
 	t_token **token_lst)
 {
 	t_token	*new;

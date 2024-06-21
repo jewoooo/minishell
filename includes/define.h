@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/20 19:57:45 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/20 11:48:32 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/20 13:28:28 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef DEFINE_H
+# define DEFINE_H
 
-int	main(int argc, char **argv, char **envp)
+typedef enum	e_token_type
 {
-	char	*input;
-	t_token	*token;
+	IDENTIFIER,
+	INPUT_REDIRECT,
+	OUTPUT_REDIRECT,
+	APPEND_O_REDIRECT,
+	HEREDOC,
+	PIPE,
+}	t_token_type;
 
-	while (TRUE)
-	{
-		input = readline("minishell$ ");
-		if (input == NULL)
-		{
-			er_printf("Input error");
-			continue ;
-		}
-		add_history(input);
-		token = tokenize(input);
-		if (token == NULL)
-			continue ;
-		token_lst_printf(token);
-		// parser
-		// executor
-	}
-	exit(SUCCESS);
-}
+#endif

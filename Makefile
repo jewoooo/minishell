@@ -6,12 +6,12 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 23:57:57 by jewlee            #+#    #+#              #
-#    Updated: 2024/06/19 15:55:10 by jewlee           ###   ########.fr        #
+#    Updated: 2024/06/20 13:16:05 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CC = gcc
+CC = cc
 LDFLAGS = -lreadline
 RM = rm -f
 MAKE_CUR = make -C

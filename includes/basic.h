@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   basic.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/20 19:57:45 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/20 11:47:04 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/20 11:51:33 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef	BASIC_H
+# define BASIC_H
 
-int	main(int argc, char **argv, char **envp)
+typedef enum	e_bool
 {
-	char	*input;
-	t_token	*token;
+	FALSE,
+	TRUE,
+}	t_bool;
 
-	while (TRUE)
-	{
-		input = readline("minishell$ ");
-		if (input == NULL)
-		{
-			er_printf("Input error");
-			continue ;
-		}
-		add_history(input);
-		token = tokenize(input);
-		if (token == NULL)
-			continue ;
-		token_lst_printf(token);
-		// parser
-		// executor
-	}
-	exit(SUCCESS);
-}
+typedef enum	e_status
+{
+	SUCCESS,
+	FAIL,
+}	t_status;
+
+#endif

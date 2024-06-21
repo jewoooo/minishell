@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 22:13:48 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 16:27:44 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:28:34 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_status	tokenize_identifier(char **line, t_token **token_lst)
 	tmp = *line;
 	while (tmp[i] != '\0')
 	{
-		if (ft_isspace(tmp[i]) == TRUE)
+		if (ft_isspace(tmp[i]) == TRUE || ft_isquote(tmp[i]) == TRUE)
 			break ;
 		i++;
 	}
@@ -67,6 +67,7 @@ t_status	tokenize_quote(char **line, t_token **token_lst)
 	t_token	*new;
 
 	tmp = *line;
+	// seper = (*line)[0] -> ' || "
 	ptr = ft_strchr(*line + 1, *tmp);
 	value = ft_substr(tmp, 1, (size_t)(ptr - tmp - 1));
 	if (value == NULL)
@@ -100,6 +101,8 @@ t_token	*ft_strtok(char *line)
 		}
 		while (ft_isspace(*line) == TRUE)
 			line++;
+		if (*line == '\0')
+			break ;
 		if (*line == '\'' || *line == '\"')
 			flag = tokenize_quote(&line, &token_lst);
 		else if (*line == '>' || *line == '<' || *line == '|')

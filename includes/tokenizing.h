@@ -6,50 +6,42 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 02:40:32 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 15:29:04 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:06:36 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZING_H
 # define TOKENIZING_H
 
-typedef enum	s_tokentype
-{
-	IDENTIFIER,
-	INPUT_REDIRECT,
-	OUTPUT_REDIRECT,
-	APPEND_O_REDIRECT,
-	HEREDOC,
-	PIPE,
-	FILE_NAME,
-}	t_tokentype;
+# include "./basic.h"
+# include "./define.h"
 
-typedef struct	s_stack {
+typedef struct	s_stack
+{
     char quote;
     struct s_stack *next;
 }	t_stack;
 
 typedef struct	s_token
 {
-	t_tokentype		type;
+	t_token_type		type;
 	char			*value;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
 
-
 // tokenizer.c
 t_token			*tokenize(char *line);
 
 // tokenizer_append.c
-t_status	append_operator(t_tokentype type, char **line
+t_status	append_operator(t_token_type type, char **line
 	, t_token **token_lst);
 
 // tokenizer_strtok.c
 t_token	*ft_strtok(char *line);
 
 // tokenizer_lst.c
-t_token	*token_lst_new(char *value, t_tokentype type);
+t_token	*token_lst_new(char *value, t_token_type type);
 void	token_lst_clear(t_token **lst);
 void	token_lst_add_back(t_token **lst, t_token *new);
 
