@@ -6,7 +6,7 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 23:57:57 by jewlee            #+#    #+#              #
-#    Updated: 2024/07/07 22:03:22 by jewlee           ###   ########.fr        #
+#    Updated: 2024/07/08 13:26:26 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS = ./srcs/main.c \
 	./srcs/3_builtins/ft_builtins_env.c \
 	./srcs/3_builtins/ft_builtins_echo.c \
 	./srcs/3_builtins/ft_builtins_exit.c \
+	./srcs/4_envp/init_envp.c
 
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -L./libft -lft -I./includes

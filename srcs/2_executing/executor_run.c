@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:49:29 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/06 20:58:30 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/08 13:27:34 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void child_process(t_command *cmd, t_info *info)
 			ft_builtins(cmd, info);
 		else
 		{
-			if (execve(cmd->cmd_path, cmd->args, info->envp) == -1)
+			if (execve(cmd->cmd_path, cmd->args, info->dup_envp) == -1)
 			{
 				perror("execve() error\n");
 				exit(FAIL);

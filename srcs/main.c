@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/06 20:53:41 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/08 13:34:10 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_info		info;
 
-	info.envp = envp;
+	if (init_envp(&info, envp) == FAIL)
+		exit(FAIL);
 	while (TRUE)
 	{
 		info.line = readline("minishell$ ");

@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 21:20:46 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/07 21:46:12 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/08 13:27:50 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	builtins_env(t_info *info)
 	int	i;
 
 	i = -1;
-	while (info->envp[++i] != NULL)
-		printf("%s\n", info->envp[i]);
+	while (info->dup_envp[++i] != NULL)
+		printf("%s\n", info->dup_envp[i]);
 }

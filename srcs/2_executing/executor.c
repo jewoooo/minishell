@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:04:28 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/07 21:49:50 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/08 13:27:16 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_status	ft_execute(t_info *info)
 	int			ps_cnt;
 
 	// path 찾기
-	path_env = find_path(info->envp);
+	path_env = find_path(info->dup_envp);
 	// : 로 분리
 	split_path = ft_split(path_env, ':');
 	// 각 cmd_path

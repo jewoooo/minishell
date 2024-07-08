@@ -6,24 +6,26 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 22:03:05 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/07 22:45:24 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/08 13:27:58 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // exit 3 | echo hello -> 다중 커맨드는 exit 이 안됨.
-// exit 1 2 -> args[2] != NULL too many arguments.
+// exit 1 2 -> too many arguments.
+// exit asej -> bash: exit: asdjhd: numeric argument required
 void	builtins_exit(t_command *cmd)
 {
 	int	exit_value;
 
 	printf("exit\n");
-	if (cmd->args[2] != NULL)
-	{
-		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
+	if (cmd->args[1] == NULL)
+		exit(SUCCESS);
+	if (cmd->args[2] != NULL) // 부모와 자식 동작 다름.
+	{ // 자식일 경우 exit 해야함.
+		printf("minishell: exit: too many arguments\n");
 		return ;
 	}
-	check_isnum(cmd->args[1]);
-	exit(SUCCESS);
+	// valid_isnum(cmd->args);
 }
