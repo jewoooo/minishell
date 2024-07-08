@@ -1,44 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
+/*   tokenizer_valid.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 22:19:18 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 15:56:21 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/19 14:00:11 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/26 22:51:21 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_bool	ft_isspace(char c)
+// 기존에 "hello'" 이걸 못받았는데 수정함.
+t_bool	valid_quotes(char *line)
 {
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (TRUE);
-	return (FALSE);
-}
+	char	tmp;
 
-t_bool	ft_isquote(char c)
-{
-	if (c == '\'' || c == '\"')
-		return (TRUE);
-	return (FALSE);
-}
-
-t_status	skip_quotes(char *line, int *i)
-{
-	char	quote;
-
-	quote = line[*i];
-	if (ft_strchr(line + (*i + 1), quote) != NULL)
+	while (*line != '\0')
 	{
-		(*i)++;
-		while (line[*i] != quote)
-			(*i)++;
-		(*i)++;
-		return (SUCCESS);
+		if (*line == '\'' || *line == '\"')
+		{
+			tmp = *line;
+			line++;
+			line = ft_strchr(line, tmp);
+			if (line == NULL)
+				return (FALSE);
+		}
+		line++;
 	}
-	return (FAIL);
+	return (TRUE);
 }
-

@@ -1,69 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_lst.c                                    :+:      :+:    :+:   */
+/*   parser_f_lst.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 02:43:40 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/20 11:55:19 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/25 23:57:50 by jewlee            #+#    #+#             */
+/*   Updated: 2024/07/05 17:57:17 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*token_lst_new(char *value, t_token_type type)
+t_file	*file_lst_new(t_token_type type, char *content)
 {
-	t_token	*new;
+	t_file	*new;
 
-	new = (t_token *)ft_calloc(1, sizeof(t_token));
+	new = ft_calloc(1, sizeof(t_file));
 	if (new == NULL)
 		return (NULL);
-	new->value = value;
 	new->type = type;
+	if (type == HEREDOC)
+		new->delimit = content;
+	else
+		new->file_name = content;
 	return (new);
 }
 
-void	token_lst_add_back(t_token **lst, t_token *new)
+void	file_lst_add_back(t_file **f_lst, t_file *new)
 {
-	t_token	*curr;
+	t_file	*curr;
 
-	if (*lst == NULL)
+	if (*f_lst == NULL)
 	{
-		*lst = new;
+		*f_lst = new;
 		return ;
 	}
-	curr = *lst;
-	while (curr->next)
+	curr = *f_lst;
+	while (curr->next != NULL)
 		curr = curr->next;
-	new->prev = curr;
 	curr->next = new;
 }
 
-void	token_lst_clear(t_token **lst)
+void	file_lst_clear(t_file **lst)
 {
-	t_token	*curr;
-	t_token	*tmp;
+	t_file	*curr;
+	t_file	*tmp;
 
 	if (lst == NULL)
 		return ;
 	curr = *lst;
-	while (curr)
+	while (curr != NULL)
 	{
-		free(curr->value);
 		tmp = curr->next;
 		free(curr);
 		curr = tmp;
 	}
 	*lst = NULL;
-}
-
-void	token_lst_printf(t_token *lst)
-{
-	while (lst != NULL)
-	{
-		printf("%d\n", lst->type);
-		printf("%s\n", lst->value);
-		lst = lst->next;
-	}
 }

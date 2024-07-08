@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_utils.c                                  :+:      :+:    :+:   */
+/*   ft_builtins_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 13:57:18 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 15:55:39 by jewlee           ###   ########.fr       */
+/*   Created: 2024/07/06 17:24:11 by jewlee            #+#    #+#             */
+/*   Updated: 2024/07/07 21:47:12 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_status	er_printf(char *s)
+void	builtins_pwd(t_command *cmd)
 {
-	printf("%s", s);
-	return (FAIL);
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		printf("getcwd() error\n");
+	else
+		printf("%s\n", cwd);
+	return ;
 }

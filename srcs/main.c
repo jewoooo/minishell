@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/20 19:57:45 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/06 20:53:41 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,23 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_token	*token;
+	t_info		info;
 
+	info.envp = envp;
 	while (TRUE)
 	{
-		input = readline("minishell$ ");
-		if (input == NULL)
-		{
-			er_printf("Input error");
+		info.line = readline("minishell$ ");
+		if (info.line == NULL)
+			exit(FAIL);
+		add_history(info.line);
+		info.token = ft_tokenize(info.line);
+		if (info.token == NULL)
 			continue ;
-		}
-		add_history(input);
-		token = tokenize(input);
-		if (token == NULL)
+		info.cmd = ft_parse(info.token);
+		if (info.cmd == NULL)
 			continue ;
-		token_lst_printf(token);
-		// parser
-		// executor
+		ft_execute(&info);
+		// cmd_lst_printf(info.cmd);
 	}
 	exit(SUCCESS);
 }

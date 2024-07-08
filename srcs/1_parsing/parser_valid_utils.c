@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   parser_valid_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 15:12:58 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/19 16:27:48 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/22 17:11:47 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/22 18:14:04 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*tokenize(char *line)
+t_bool	ft_isredirect(t_token_type type)
 {
-	t_token	*token_lst;
-
-	if (valid_quotes(line) == FALSE)
-	{
-		er_printf("Quotes errors\n");
-		return (NULL);
-	}
-	token_lst = ft_strtok(line);
-	free(line);
-	return (token_lst);
+	if (type == INPUT_REDIRECT || type == OUTPUT_REDIRECT
+		|| type == APPEND_O_REDIRECT || type == HEREDOC)
+		return (TRUE);
+	return (FALSE);
 }

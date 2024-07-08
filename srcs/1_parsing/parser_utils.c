@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basic.h                                            :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/02 16:50:29 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/05 19:32:29 by jewlee           ###   ########.fr       */
+/*   Created: 2024/06/22 21:09:48 by jewlee            #+#    #+#             */
+/*   Updated: 2024/06/23 18:41:48 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASIC_H
-# define BASIC_H
+#include "../../includes/minishell.h"
 
-typedef enum	e_bool
+int	cnt_pipe(t_token *token)
 {
-	FALSE,
-	TRUE,
-}	t_bool;
+	int		cnt;
 
-typedef enum	e_status
-{
-	SUCCESS,
-	FAIL,
-}	t_status;
-
-#endif
+	cnt = 0;
+	while (token != NULL)
+	{
+		if (token->type == PIPE)
+			cnt++;
+		token = token->next;
+	}
+	return (cnt);
+}

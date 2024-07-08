@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 21:55:28 by jewlee            #+#    #+#             */
-/*   Updated: 2023/10/12 16:00:15 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/23 16:07:40 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*ft_calloc(size_t count, size_t size)
 	size_t	i;
 
 	ptr = malloc(size * count);
-	if (ptr == 0)
-		return (0);
+	if (ptr == NULL)
+		return (NULL);
 	i = 0;
 	while (i < (size * count))
 	{

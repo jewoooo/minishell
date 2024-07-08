@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   define.h                                           :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 11:48:32 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/20 13:28:28 by jewlee           ###   ########.fr       */
+/*   Created: 2024/07/06 16:33:47 by jewlee            #+#    #+#             */
+/*   Updated: 2024/07/07 22:03:58 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINE_H
-# define DEFINE_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-typedef enum	e_token_type
-{
-	IDENTIFIER,
-	INPUT_REDIRECT,
-	OUTPUT_REDIRECT,
-	APPEND_O_REDIRECT,
-	HEREDOC,
-	PIPE,
-}	t_token_type;
+# include "./basic.h"
+
+// ft_builtins.c
+void	ft_builtins(t_command *cmd, t_info *info);
+
+// ft_builtins_cd.c
+void	builtins_cd(t_command *cmd);
+
+// ft_builtins_env.c
+void	builtins_env(t_info *info);
+
+// ft_builtins_pwd.c
+void	builtins_pwd(t_command *cmd);
+
+// ft_builtins_echo.c
+void	builtins_echo(t_command *cmd);
+
+// ft_builtins_exit.c
+void	builtins_exit(t_command *cmd);
 
 #endif
