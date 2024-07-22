@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:57:30 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/12 12:47:56 by jewlee           ###   ########.fr       */
+/*   Created: 2024/07/06 17:24:11 by jewlee            #+#    #+#             */
+/*   Updated: 2024/07/22 19:42:21 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-size_t	ft_strlen(const char *s)
+void	builtins_pwd(t_info *info)
 {
-	size_t	len;
+	char	cwd[PATH_MAX];
 
-	len = 0;
-	while (s[len] != 0)
-		len++;
-	return (len);
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		printf("%s\n", info->pwd);
+	else
+	{
+		printf("%s\n", cwd);
+		info->exit_status = SUCCESS;
+	}
 }
-
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	char	str[] = "hello";
-
-	printf("%zu\n", ft_strlen(str));
-
-}
-*/

@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 16:57:30 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/12 12:47:56 by jewlee           ###   ########.fr       */
+/*   Created: 2024/07/02 16:50:29 by jewlee            #+#    #+#             */
+/*   Updated: 2024/07/22 19:02:01 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef BASIC_H
+# define BASIC_H
 
-size_t	ft_strlen(const char *s)
+typedef enum	e_bool
 {
-	size_t	len;
+	FALSE,
+	TRUE,
+}	t_bool;
 
-	len = 0;
-	while (s[len] != 0)
-		len++;
-	return (len);
-}
-
-/*
-#include <stdio.h>
-
-int	main(void)
+typedef enum	e_status
 {
-	char	str[] = "hello";
+	SUCCESS,
+	FAIL,
+}	t_status;
 
-	printf("%zu\n", ft_strlen(str));
-
-}
-*/
+#endif
