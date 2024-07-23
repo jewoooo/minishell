@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:12:58 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 18:17:02 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/23 12:53:54 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_token	*ft_strtok(char *line)
 	return (token_lst);
 }
 
-t_token	*ft_tokenize(char *line, int exit_status)
+t_token	*ft_tokenize(char *line, char **envp, int exit_status)
 {
 	t_token	*token_lst;
 	char	*expand_line;
@@ -73,7 +73,7 @@ t_token	*ft_tokenize(char *line, int exit_status)
 		ft_fprintf(STDERR_FILENO, "Invalid quote\n");
 		return (NULL);
 	}
-	expand_line = substitute_env(line, exit_status);
+	expand_line = substitute_env(line, envp, exit_status);
 	if (expand_line == NULL)
 		exit(FAIL);
 	free(line);

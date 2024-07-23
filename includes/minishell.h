@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 00:25:29 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/23 11:04:52 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 # include "../libft/libft.h"
 
-# include "./struct.h"
+# include "./basic.h"
 # include "./tokenizing.h"
 # include "./parsing.h"
 
@@ -41,7 +41,6 @@ typedef struct s_info
 	char				*line;
 	char				**og_envp;
 	char				**dup_envp;
-	char				*home_dir;
 	char				*pwd;
 	t_list				*env_lst;
 	pid_t				pid;
@@ -51,11 +50,17 @@ typedef struct s_info
 	struct termios		ch_term;
 }	t_info;
 
-/*	0_init */
+/* 0_init */
 t_status	init_info(t_info *info, char **envp);
 t_status	init_envp(t_info *info, char **envp);
 void		heredoc_sigint(int sig);
 void		init_signal(t_info *info);
+
+/* 01_tokenizing */
+// -> tokenizing.h
+
+/* 02_parsing */
+// -> parsing.h
 
 /* 03_execute */
 t_status	ft_execute(t_info *info);
@@ -88,7 +93,6 @@ void		valid_cmd_path(char *cmd_path);
 /* clear */
 void		clear_executor(t_info *info);
 
-
 /* 04_builtins */
 void		ft_builtins(t_command *cmd, t_info *info);
 
@@ -103,13 +107,10 @@ void		builtins_unset(t_command *cmd, t_info *info);
 char		**unset_dup_envp(t_list *env_lst);
 
 /* export */
+t_bool		env_is_existed(char	*arg, char **envp, char *ptr);
 void		builtins_export(t_command *cmd, t_info *info);
 void		print_export(t_info *info);
 int			change_env(char *arg, t_list *env_lst, char *ptr);
 void		export_fprintf_err(t_command *cmd, char *s, t_info *info);
-
-/* utils */
-char		*super_join(char *src1, char *src2);
-void		sfree(void *ptr);
 
 #endif

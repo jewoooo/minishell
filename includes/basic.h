@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   basic.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 23:11:55 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 14:30:56 by jewlee           ###   ########.fr       */
+/*   Created: 2024/07/02 16:50:29 by jewlee            #+#    #+#             */
+/*   Updated: 2024/07/23 11:05:05 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft.h"
+#ifndef BASIC_H
+# define BASIC_H
 
-char	*ft_strncpy(char *dst, char *src, int len)
+typedef enum e_bool
 {
-	int	i;
+	FALSE,
+	TRUE,
+}	t_bool;
 
-	i = 0;
-	while (src[i] && i < len)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
+typedef enum e_status
+{
+	SUCCESS,
+	FAIL,
+}	t_status;
+
+#endif

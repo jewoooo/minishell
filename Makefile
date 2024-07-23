@@ -6,18 +6,19 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 23:57:57 by jewlee            #+#    #+#              #
-#    Updated: 2024/07/23 00:34:55 by jewlee           ###   ########.fr        #
+#    Updated: 2024/07/23 14:44:40 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= 		minishell
 CC 				= 		cc
-CFLAGS 			= 		-Wall -Wextra -Werror
+CFLAGS 			= 		-Wall -Wextra -Werror -fsanitize=address
 
-#RDFLAGS 		= 		-lreadline
+RDFLAGS 		= 		-lreadline
 # for M2
-RDPATH 			= 		-I /opt/homebrew/opt/readline/include
-RDFLAGS 		= 		-lreadline $(RDPATH) -L/opt/homebrew/opt/readline/lib
+MAC_RDPATH 		= 		-I /opt/homebrew/opt/readline/include
+MAC_RDFLAGS 	=		$(RDPATH) -L/opt/homebrew/opt/readline/lib
+INCLUDES 		=		-L./libft -lft -I./includes
 
 SRCS			=		./srcs/minishell.c						\
 						./srcs/0_init/envp.c 					\
@@ -26,7 +27,8 @@ SRCS			=		./srcs/minishell.c						\
 						./srcs/1_tokenizing/token.c				\
 						./srcs/1_tokenizing/tokenizer.c			\
 						./srcs/1_tokenizing/valid.c				\
-						./srcs/1_tokenizing/env.c				\
+						./srcs/1_tokenizing/env/env.c			\
+						./srcs/1_tokenizing/env/utils.c			\
 						./srcs/1_tokenizing/method.c			\
 						./srcs/1_tokenizing/utils.c				\
 						./srcs/2_parsing/cmd.c					\
@@ -56,10 +58,8 @@ SRCS			=		./srcs/minishell.c						\
 
 OBJ				=		$(SRCS:.c=.o)
 
-INCLUDES = -L./libft -lft -I./includes
-
 LIBFT_DIR		=		./libft
-#LIBFT_ARC		=		./libft/libft.a
+LIBFT_ARC		=		./libft/libft.a
 
 ### COLOR CODE ###
 NONE='\033[0m'
@@ -73,26 +73,31 @@ DELETELINE='\033[K;
 ###################
 
 all : $(NAME)
+	@make clean
 
 $(NAME) : $(OBJ)
 	@echo $(CURSIVE)$(YELLOW) "		- Making $(NAME) -" $(NONE)
 	@make -C $(LIBFT_DIR) bonus
-	@$(CC) $(RDFLAGS) $^ -o $@ $(INCLUDES)
+	@$(CC) $(CFLAGS) $(RDFLAGS) $^ -o $@ $(LIBFT_ARC)
+#	@$(CC) $(CFLAGS) $(MAC_RDFLAGS) $^ -o $@ $(INCLUDES) $(RDFLAGS)
 	@echo $(CURSIVE)$(YELLOW) "		- Compiling $(NAME) -" $(NONE)
 	@echo $(GREEN) "		- Complete -"$(NONE)
 
 %.o : %.c
 	@echo $(CURSIVE)$(YELLOW) "		- Making object files -" $(NONE)
-	@$(CC) -c $< -o $@ $(RDFLAGS)
+	@$(CC) $(CFLAGS) -c $< -o $@
+#	@$(CC) $(CFLAGS) -c $< -o $@ $(MAC_RDPATH)
 
 dclean :
 	@rm -rf ./a.out ./a.out.dSYM
 
 clean :
+	@make -C $(LIBFT_DIR) clean
 	@rm -rf $(OBJ)
 	@echo $(CURSIVE)$(BLUE) "		- clean OBJ files -" $(NONE)
 
 fclean : clean
+	@make -C $(LIBFT_DIR) fclean
 	@rm -rf $(NAME)
 	@echo $(CURSIVE)$(PURPLE)"		- clean $(NAME) file -"$(NONE)
 

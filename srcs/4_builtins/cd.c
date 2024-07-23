@@ -6,27 +6,40 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:39:49 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:43:53 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/23 10:55:33 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*load_home_dir(t_info *info, t_command *cmd, char *line)
+char	*load_home(t_list *env_lst)
+{
+	while (env_lst)
+	{
+		if (!ft_strncmp("HOME=", env_lst->content, 5))
+			return (ft_strdup(getenv("HOME")));
+		env_lst = env_lst->next;
+	}
+	return (NULL);
+}
+
+char	*load_dir(t_info *info, t_command *cmd)
 {
 	char	*home;
 
 	if (!cmd->args[1])
 	{
-		home = getenv("HOME");
+		home = load_home(info->env_lst);
 		if (!home)
 		{
-			write(STDERR_FILENO, "cd : HOME not set\n", 21);
+			write(STDERR_FILENO, "cd : HOME not set\n", 19);
 			return (NULL);
 		}
-		return (home);
+		return (ft_strdup(home));
 	}
-	return (ft_strjoin(info->home_dir, line));
+	else if (cmd->args[1][0] == '~')
+		return (ft_strjoin(getenv ("HOME"), cmd->args[1] + 1));
+	return (ft_strdup(cmd->args[1]));
 }
 
 void	chagne_oldpwd(t_info *info, char *newpwd)
@@ -73,12 +86,10 @@ void	builtins_cd(t_info *info, t_command *cmd)
 {
 	char	*dir;
 
-	if (!cmd->args[1])
-		dir = load_home_dir(info, cmd, NULL);
-	else if (cmd->args[1][0] == '~')
-		dir = load_home_dir(info, cmd, cmd->args[1] + 1);
-	else
-		dir = cmd->args[1];
+	dir = load_dir(info, cmd);
+	if (!dir)
+		return ;
 	if (!ft_chdir(info, dir))
 		ft_fprintf(STDERR_FILENO, "No such file or directory\n");
+	sfree(dir);
 }

@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 00:15:16 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 00:29:21 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/23 14:28:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_status	init_cmd_arg(t_command **cmd_lst, t_token *token)
 			tmp->cmd = ft_strdup(token->value);
 			if (tmp->cmd == NULL)
 				exit(FAIL);
-			cnt++;
 		}
 		if (token->type == PIPE || token->next == NULL)
 			parsing_to_pipe_or_end(&tmp, &curr, &cnt);

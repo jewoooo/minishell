@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtins_echo.c                                 :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:41:02 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/21 23:04:47 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/23 11:29:31 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ static void	print_args_with_flag(t_command *cmd)
 	{
 		i = 0;
 		while (cmd->args[++i] != NULL)
-			printf("%s ", cmd->args[i]);
+		{
+			printf("%s", cmd->args[i]);
+			if (cmd->args[i + 1] != NULL)
+				printf(" ");
+		}
 		printf("\n");
 	}
 }

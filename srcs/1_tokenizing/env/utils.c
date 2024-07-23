@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/02 16:50:29 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:02:01 by minhulee         ###   ########seoul.kr  */
+/*   Created: 2024/07/23 10:59:58 by minhulee          #+#    #+#             */
+/*   Updated: 2024/07/23 11:05:42 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASIC_H
-# define BASIC_H
+#include "../../../includes/minishell.h"
 
-typedef enum	e_bool
+void	sfree(void *ptr)
 {
-	FALSE,
-	TRUE,
-}	t_bool;
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
+}
 
-typedef enum	e_status
+char	*super_join(char *src1, char *src2)
 {
-	SUCCESS,
-	FAIL,
-}	t_status;
+	char	*dst;
 
-#endif
+	dst = ft_strjoin(src1, src2);
+	sfree(src1);
+	sfree(src2);
+	return (dst);
+}

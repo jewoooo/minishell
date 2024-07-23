@@ -6,16 +6,16 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 02:40:32 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:34:31 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/23 12:54:01 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZING_H
 # define TOKENIZING_H
 
-#include "./struct.h"
+# include "./basic.h"
 
-typedef enum	e_token_type
+typedef enum e_token_type
 {
 	COMMAND,
 	ARGUMENT,
@@ -28,7 +28,7 @@ typedef enum	e_token_type
 	END_OF_FILE,
 }	t_token_type;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
@@ -43,10 +43,12 @@ void		token_lst_clear(t_token **lst);
 void		token_lst_printf(t_token *lst);
 
 /* env_to_value */
-char		*substitute_env(char *line, int exit_status);
+void		sfree(void *ptr);
+char		*super_join(char *src1, char *src2);
+char		*substitute_env(char *line, char **envp, int exit_status);
 
 /* tokenizer */
-t_token		*ft_tokenize(char *line, int exit_status);
+t_token		*ft_tokenize(char *line, char **envp, int exit_status);
 
 /* method */
 char		*tokenize_quote_str(char **line);

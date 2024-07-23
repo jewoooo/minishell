@@ -3,39 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:44:56 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/23 14:41:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	sfree(void *ptr)
-{
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
-}
-
-char	*super_join(char *src1, char *src2)
-{
-	char	*dst;
-
-	dst = ft_strjoin(src1, src2);
-	sfree(src1);
-	sfree(src2);
-	return (dst);
-}
-
-//token_lst_printf(info->token);
-//cmd_lst_printf(info->cmd);
+// token_lst_printf(info->token);
+// cmd_lst_printf(info->cmd);
 t_status	ft_minishell(t_info *info)
 {
-	info->token = ft_tokenize(info->line, info->exit_status);
+	info->token = ft_tokenize(info->line, info->dup_envp, info->exit_status);
 	if (info->token == NULL)
 		return (FAIL);
 	info->cmd = ft_parse(info->token, &(info->total_heredoc_cnt));

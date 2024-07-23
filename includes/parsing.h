@@ -6,15 +6,15 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 16:55:05 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 00:26:03 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/23 14:28:14 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-#include "./struct.h"
-#include "./tokenizing.h"
+# include "./basic.h"
+# include "./tokenizing.h"
 
 typedef struct s_file
 {
@@ -24,7 +24,7 @@ typedef struct s_file
 	struct s_file	*next;
 }	t_file;
 
-typedef enum	e_built_type
+typedef enum e_built_type
 {
 	NOTBUILTIN = 0,
 	CD,
@@ -36,7 +36,7 @@ typedef enum	e_built_type
 	EXPORT,
 }	t_built_type;
 
-typedef struct	s_command
+typedef struct s_command
 {
 	char				*cmd_path;
 	char				*cmd;
@@ -52,7 +52,7 @@ typedef struct	s_command
 	int					outfile_fd;
 	t_bool				is_parent;
 	struct s_command	*prev;
-	struct s_command	*next; // pipe
+	struct s_command	*next;
 }	t_command;
 
 /* cmd */
@@ -73,11 +73,12 @@ t_command	*ft_parse(t_token *token, int *heredoc_cnt);
 /* init/init */
 t_status	init_arg(t_command **cmd_lst, t_token *token, int cnt);
 t_status	init_cmd_arg(t_command **cmd_lst, t_token *token);
-t_status	init_operator(t_command **cmd_lst, t_token *token, int *heredoc_cnt);
+t_status	init_operator(t_command **cmd_lst,
+				t_token *token, int *heredoc_cnt);
 
 /* init/utils */
-void	parsing_to_pipe_or_end(t_command **tmp, t_token **curr, int *cnt);
-void	increment_count_if_needed(int *cnt, t_token *token);
+void		increment_count_if_needed(int *cnt, t_token *token);
+void		parsing_to_pipe_or_end(t_command **tmp, t_token **curr, int *cnt);
 
 /* valid */
 t_bool		valid_operator_syntax(t_token *token);

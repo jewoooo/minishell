@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_method.c                                         :+:      :+:    :+:   */
+/*   method.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 17:47:00 by minhulee          #+#    #+#             */
-/*   Updated: 2024/07/22 18:14:38 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/23 11:56:16 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_status	tokenize_identifier(char **line, t_token **token_lst)
 	content = NULL;
 	while (**line != '\0' && !ft_isspace(**line) && !ft_isoperator(**line))
 	{
-		if (**line == '"' || **line == '\'')
+		if (**line == '\"' || **line == '\'')
 			tmp = tokenize_quote_str(line);
 		else
 			tmp = tokenize_str(line);

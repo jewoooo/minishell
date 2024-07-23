@@ -6,13 +6,13 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 22:15:39 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 18:17:12 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/23 12:54:25 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-static char	*is_exist_env(char *line, int *ptr)
+char	*is_exist_env(char *line, char**envp, int *ptr)
 {
 	char	*name;
 	char	*res;
@@ -20,62 +20,64 @@ static char	*is_exist_env(char *line, int *ptr)
 
 	res = NULL;
 	i = 1;
-	while (!(line[*ptr + i] == '\'' || line[*ptr + i] == '\"'
-			|| line[*ptr + i] == '$' || line[*ptr + i] == ' ')
-		&& line[*ptr + i])
+	while (!(line[*ptr + i] == '\'' || line[*ptr + i] == '\"' || line[*ptr + i] == '$' || line[*ptr + i] == ' ') && line[*ptr + i])
 		i++;
 	name = ft_substr(line, *ptr + 1, i - 1);
 	*ptr += i;
-	res = getenv(name);
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], name, ft_strlen(name)))
+		{
+			res = ft_substr(envp[i], ft_strlen(name) + 1, ft_strlen(envp[i]));
+			break ;
+		}
+		i++;
+	}
 	free(name);
 	if (!res)
 		return (ft_strdup(""));
 	return (res);
 }
 
-static void	to_single_quote(char *line, int *ptr, char **res, int *start)
+char	*substitute_env(char *line, char **envp, int exit_status)
 {
-	while (line[++(*ptr)] != '\'')
-		;
-	*res = super_join(*res, ft_substr(line, *start, ++(*ptr)));
-	start = ptr;
-}
-
-static void	env_to_value(char *line, int *ptr, int *start, char **res)
-{
-	char	*env;
-
-	env = super_join(ft_substr(line, *start, ptr - start),
-			is_exist_env(line, ptr));
-	*res = super_join(*res, env);
-	start = ptr;
-}
-
-char	*substitute_env(char *line, int exit_status)
-{
-	char	*res;
 	int		start;
 	int		ptr;
+	char	*res;
+	char	*env;
 	t_bool	flag;
 
-	(void)exit_status;
 	start = 0;
-	ptr = 0;
+	ptr	= 0;
 	flag = FALSE;
 	res = NULL;
 	while (line[ptr])
 	{
 		if (line[ptr] == '\'' && !flag)
-			to_single_quote(line, &ptr, &res, &start);
+		{
+			while (line[++ptr] != '\'') ;
+			res = super_join(res, ft_substr(line, start, ++ptr));
+			start = ptr;
+		}
 		else if (line[ptr] == '\"')
 			flag = !flag;
-		else if (line[ptr] == '$' && !ft_isoperator(line[ptr + 1])
-			&& line[ptr + 1] != ' ' && line[ptr + 1] != '\0')
+		else if (line[ptr] == '$' && !ft_isoperator(line[ptr + 1]) && line[ptr + 1] != ' ' && line[ptr + 1] != '\0')
 		{
-			env_to_value(line, &ptr, &start, &res);
+			if (line[ptr + 1] == '?')
+			{
+				env = super_join(ft_substr(line, start, ptr - start), ft_itoa(exit_status));
+				ptr += 2;
+			}
+			else
+				env = super_join(ft_substr(line, start, ptr - start), is_exist_env(line, envp, &ptr));
+			res = super_join(res, env);
+			start = ptr;
 			continue ;
 		}
 		ptr++;
 	}
-	return (super_join(res, ft_substr(line, start, ptr - start)));
+	 if (start != ptr)
+	 	res = super_join(res, ft_substr(line, start, ptr - start));
+	return (res);
 }

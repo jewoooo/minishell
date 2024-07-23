@@ -6,12 +6,12 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:23:51 by jewoolee          #+#    #+#             */
-/*   Updated: 2024/07/18 23:28:08 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/23 14:29:40 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FT_FPRINTF_H
+# define FT_FPRINTF_H
 
 # include <stdlib.h>
 # include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:19:35 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:25:59 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/23 10:43:23 by minhulee         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	args_is_char(t_command *cmd, t_info *info, int i, char *ptr)
 		export_fprintf_err(cmd, cmd->args[i], info);
 }
 
-static t_bool	env_is_existed(char	*arg, char **envp, char *ptr)
+t_bool	env_is_existed(char	*arg, char **envp, char *ptr)
 {
 	int		i;
 
