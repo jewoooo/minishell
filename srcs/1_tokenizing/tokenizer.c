@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:12:58 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 12:53:54 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/24 16:16:34 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,25 @@ t_token	*ft_strtok(char *line)
 	return (token_lst);
 }
 
+void	init_token_info(t_token_info *info, char **envp, int exit_status)
+{
+	info->envp = envp;
+	info->exit_status = exit_status;
+}
+
 t_token	*ft_tokenize(char *line, char **envp, int exit_status)
 {
-	t_token	*token_lst;
-	char	*expand_line;
+	t_token_info	info;
+	t_token			*token_lst;
+	char			*expand_line;
 
-	(void)exit_status;
 	if (valid_quotes(line) == FALSE)
 	{
 		ft_fprintf(STDERR_FILENO, "Invalid quote\n");
 		return (NULL);
 	}
-	expand_line = substitute_env(line, envp, exit_status);
+	init_token_info(&info, envp, exit_status);
+	expand_line = substitute_env(line, &info);
 	if (expand_line == NULL)
 		exit(FAIL);
 	free(line);

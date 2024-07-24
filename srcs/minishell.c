@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 14:41:32 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/24 16:27:10 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	main(int argc, char **argv, char **envp)
 		info.line = readline("minishell$ ");
 		if (info.line == NULL)
 		{
-			ft_putstr_fd("\x1b[1A\033[11Cexit\n", STDOUT_FILENO);
+			if(isatty(0))
+				ft_putstr_fd("\x1b[1A\033[11Cexit\n", STDOUT_FILENO);
 			break ;
 		}
 		if (ft_strlen(info.line) == 0)

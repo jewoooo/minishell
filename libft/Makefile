@@ -58,6 +58,17 @@ SRCS_BONUS =  \
 ./ft_lstmap_bonus.c
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
+### COLOR CODE ###
+NONE='\033[0m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+GRAY='\033[2;37m'
+CURSIVE='\033[3m'
+PURPLE='\033[35m'
+BLUE='\033[34m'
+DELETELINE='\033[K;
+###################
+
 all : $(NAME)
 
 $(NAME) : make_mandatory
@@ -65,23 +76,33 @@ $(NAME) : make_mandatory
 bonus : make_bonus
 
 make_mandatory : $(OBJS)
+	@ echo $(CURSIVE)$(YELLOW) "		- Making $(NAME) -" $(NONE)
 	@ $(AR) $(ARFLAGS) $(NAME) $^
 	@ touch $@
+	@ echo $(CURSIVE)$(YELLOW) "		- Compiling $(NAME) -" $(NONE)
+	@ echo $(GREEN) "		- Complete -"$(NONE)
 
 make_bonus : $(OBJS) $(OBJS_BONUS)
-	$(AR) $(ARFLAGS) $(NAME) $^
+	@ echo $(CURSIVE)$(YELLOW) "		- Making $(NAME) -" $(NONE)
+	@ $(AR) $(ARFLAGS) $(NAME) $^
 	@ touch $@
+	@ echo $(CURSIVE)$(YELLOW) "		- Compiling $(NAME) -" $(NONE)
+	@ echo $(GREEN) "		- Complete -"$(NONE)
 
 %.o : %.c
+	@ echo $(CURSIVE)$(YELLOW) "		- Making object files -" $(NONE)
 	@ $(CC) $(CFLAGS) -c $< -o $@
+	
 
 clean :
-	$(RM) $(OBJS) $(OBJS_BONUS)
+	@ $(RM) $(OBJS) $(OBJS_BONUS)
 	@ $(RM) make_mandatory
 	@ $(RM) make_bonus
+	@ echo $(CURSIVE)$(BLUE) "		- clean OBJ files -" $(NONE)
 
 fclean : clean
-	$(RM) $(NAME)
+	@ $(RM) $(NAME)
+	@ echo $(CURSIVE)$(PURPLE)"		- clean $(NAME) file -"$(NONE)
 
 re : fclean all
 

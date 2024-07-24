@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 00:00:51 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:06:28 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/24 16:40:54 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	valid_cmd_path(char *cmd_path)
 {

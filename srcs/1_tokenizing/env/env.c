@@ -3,33 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 22:15:39 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 12:54:25 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/24 16:13:01 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	*is_exist_env(char *line, char**envp, int *ptr)
+char	*extract_name(char *line, t_index *idx)
+{
+	int		i;
+	char	*name;
+
+	i = 1;
+	while (line[idx->ptr + i] && !(ft_isquote(line[idx->ptr + i])
+			|| line[idx->ptr + i] == '$'
+			|| ft_isspace(line[idx->ptr + i])
+			|| ft_isoperator(line[idx->ptr + i])))
+		i++;
+	name = ft_substr(line, idx->ptr + 1, i - 1);
+	idx->ptr += i;
+	return (name);
+}
+
+char	*is_exist_env(char *line, char **envp, t_index *idx)
 {
 	char	*name;
 	char	*res;
 	int		i;
 
 	res = NULL;
-	i = 1;
-	while (!(line[*ptr + i] == '\'' || line[*ptr + i] == '\"' || line[*ptr + i] == '$' || line[*ptr + i] == ' ') && line[*ptr + i])
-		i++;
-	name = ft_substr(line, *ptr + 1, i - 1);
-	*ptr += i;
+	name = extract_name(line, idx);
+	if (subs_is_valid_name(name) == FALSE)
+		return (super_join(ft_strdup("$"), name));
 	i = 0;
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], name, ft_strlen(name)))
 		{
-			res = ft_substr(envp[i], ft_strlen(name) + 1, ft_strlen(envp[i]));
+			res = ft_substr(envp[i], ft_strlen(name) + 1,
+					ft_strlen(envp[i]) - ft_strlen(name) + 1);
 			break ;
 		}
 		i++;
@@ -40,44 +55,53 @@ char	*is_exist_env(char *line, char**envp, int *ptr)
 	return (res);
 }
 
-char	*substitute_env(char *line, char **envp, int exit_status)
+char	*replace_exit_status(char *line, t_index *idx, int exit_status)
 {
-	int		start;
-	int		ptr;
-	char	*res;
 	char	*env;
+
+	env = super_join(ft_substr(line, idx->start, idx->ptr - idx->start),
+			ft_itoa(exit_status));
+	idx->ptr += 2;
+	return (env);
+}
+
+char	*handle_dollar(char *line, char *res, t_index *idx, t_token_info *info)
+{
+	char	*env;
+
+	if (line[idx->ptr + 1] == '?')
+		env = replace_exit_status(line, idx, info->exit_status);
+	else
+		env = super_join(ft_substr(line, idx->start, idx->ptr - idx->start),
+				is_exist_env(line, info->envp, idx));
+	res = super_join(res, env);
+	idx->start = idx->ptr;
+	return (res);
+}
+
+char	*substitute_env(char *line, t_token_info *info)
+{
+	t_index	idx;
+	char	*res;
 	t_bool	flag;
 
-	start = 0;
-	ptr	= 0;
+	init_index(&idx);
 	flag = FALSE;
 	res = NULL;
-	while (line[ptr])
+	while (line[idx.ptr] != '\0')
 	{
-		if (line[ptr] == '\'' && !flag)
-		{
-			while (line[++ptr] != '\'') ;
-			res = super_join(res, ft_substr(line, start, ++ptr));
-			start = ptr;
-		}
-		else if (line[ptr] == '\"')
+		if (line[idx.ptr] == '\'' && !flag)
+			res = handle_single_quote(line, res, &idx);
+		else if (line[idx.ptr] == '\"')
 			flag = !flag;
-		else if (line[ptr] == '$' && !ft_isoperator(line[ptr + 1]) && line[ptr + 1] != ' ' && line[ptr + 1] != '\0')
+		else if (line[idx.ptr] == '$')
 		{
-			if (line[ptr + 1] == '?')
-			{
-				env = super_join(ft_substr(line, start, ptr - start), ft_itoa(exit_status));
-				ptr += 2;
-			}
-			else
-				env = super_join(ft_substr(line, start, ptr - start), is_exist_env(line, envp, &ptr));
-			res = super_join(res, env);
-			start = ptr;
+			res = handle_dollar(line, res, &idx, info);
 			continue ;
 		}
-		ptr++;
+		(idx.ptr)++;
 	}
-	 if (start != ptr)
-	 	res = super_join(res, ft_substr(line, start, ptr - start));
+	if (idx.start != idx.ptr)
+		res = super_join(res, ft_substr(line, idx.start, idx.ptr - idx.start));
 	return (res);
 }

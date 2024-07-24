@@ -6,7 +6,7 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 23:57:57 by jewlee            #+#    #+#              #
-#    Updated: 2024/07/23 14:44:40 by jewlee           ###   ########.fr        #
+#    Updated: 2024/07/24 14:37:46 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,8 +76,8 @@ all : $(NAME)
 	@make clean
 
 $(NAME) : $(OBJ)
-	@echo $(CURSIVE)$(YELLOW) "		- Making $(NAME) -" $(NONE)
 	@make -C $(LIBFT_DIR) bonus
+	@echo $(CURSIVE)$(YELLOW) "		- Making $(NAME) -" $(NONE)
 	@$(CC) $(CFLAGS) $(RDFLAGS) $^ -o $@ $(LIBFT_ARC)
 #	@$(CC) $(CFLAGS) $(MAC_RDFLAGS) $^ -o $@ $(INCLUDES) $(RDFLAGS)
 	@echo $(CURSIVE)$(YELLOW) "		- Compiling $(NAME) -" $(NONE)
@@ -87,6 +87,9 @@ $(NAME) : $(OBJ)
 	@echo $(CURSIVE)$(YELLOW) "		- Making object files -" $(NONE)
 	@$(CC) $(CFLAGS) -c $< -o $@
 #	@$(CC) $(CFLAGS) -c $< -o $@ $(MAC_RDPATH)
+
+debug :
+	cc -g $(RDFLAGS) $(SRCS) ./libft/*.c
 
 dclean :
 	@rm -rf ./a.out ./a.out.dSYM

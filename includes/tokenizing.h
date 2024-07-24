@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 02:40:32 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 12:54:01 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/24 16:13:47 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ typedef enum e_token_type
 	END_OF_FILE,
 }	t_token_type;
 
+typedef struct s_token_info
+{
+	char	**envp;
+	int		exit_status;
+}	t_token_info;
+
+typedef struct s_index
+{
+	int		start;
+	int		ptr;
+}	t_index;
+
 typedef struct s_token
 {
 	t_token_type	type;
@@ -45,7 +57,7 @@ void		token_lst_printf(t_token *lst);
 /* env_to_value */
 void		sfree(void *ptr);
 char		*super_join(char *src1, char *src2);
-char		*substitute_env(char *line, char **envp, int exit_status);
+char		*substitute_env(char *line, t_token_info *info);
 
 /* tokenizer */
 t_token		*ft_tokenize(char *line, char **envp, int exit_status);
@@ -62,5 +74,8 @@ t_bool		ft_isspace(char c);
 t_bool		ft_isquote(char c);
 t_bool		ft_isoperator(char c);
 t_status	skip_quotes(char *line, int *i);
+t_bool		subs_is_valid_name(char *name);
+char		*handle_single_quote(char *line, char *res, t_index *index);
+void		init_index(t_index *index);
 
 #endif

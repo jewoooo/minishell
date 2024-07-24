@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:49:29 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:10:21 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/24 16:40:37 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	child_process(t_command *cmd, t_info *info)
 			valid_cmd_path(cmd->cmd_path);
 			if (execve(cmd->cmd_path, cmd->args, info->dup_envp) == -1)
 			{
+				perror(cmd->cmd_path);
 				ft_fprintf(STDERR_FILENO, "execve() error\n");
 				exit(FAIL);
 			}
