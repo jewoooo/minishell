@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:27:12 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:09:08 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/25 14:19:29 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*get_cmd_path(char **path, char *path_cmd)
 		find = ft_strjoin(path[i], path_cmd);
 		if (find == NULL)
 			exit(FAIL);
-		if (access(find, X_OK) == 0)
+		if (access(find, F_OK) == 0)
 		{
 			free(path_cmd);
 			return (find);
@@ -56,10 +56,6 @@ static char	*get_cmd_path(char **path, char *path_cmd)
 
 static t_bool	check_relative_path(char *cmd)
 {
-	if (ft_strncmp(cmd, "./", 2) == 0)
-		return (TRUE);
-	if (ft_strncmp(cmd, "../", 3) == 0)
-		return (TRUE);
 	if (ft_strchr(cmd, '/') != NULL)
 		return (TRUE);
 	return (FALSE);
@@ -70,10 +66,8 @@ static char	*find_cmd_path(char **path, char *cmd)
 	char	*path_cmd;
 	char	*find;
 
-	if (cmd == NULL)
+	if (cmd == NULL || ft_strlen(cmd) == 0)
 		return (NULL);
-	if (cmd[0] == '/')
-		return (ft_strdup(cmd));
 	if (check_relative_path(cmd) == TRUE)
 		return (ft_strdup(cmd));
 	if (access(cmd, X_OK) == 0)
@@ -92,7 +86,25 @@ void	get_path(char **path, t_command **cmd)
 	tmp = *cmd;
 	while (tmp != NULL)
 	{
-		tmp->cmd_path = find_cmd_path(path, tmp->cmd);
+		tmp->cmd_path = find_cmd_path(path, tmp->cmd); // -> PATH 환경변수에서 찾아보고
+		// './args[0]'
+		// execve -> 파일이 있는가? | 실행이가능한가? | 
 		tmp = tmp->next;
 	}
 }
+
+// 1. 패스를 토대로 해당 파일이 있는지 확인한다.
+// 2. 만약 패스가 없다면 현재 디렉토리를 기준으로 확인한다.
+// 3. 1 -> 해당 파일이 없다면 -> command not found
+// 4. 해당 파일이 존재하고 권한이 없다면 -> permissin denied | command not found
+// 5. 해당 파일이 존재하고 권한이 있으면 라인 한줄 한줄을 입력으로 받아서 순차적으로 실행해준다...
+
+// 6. 패스가 없다? -> 외부 함수 목록이 존재하지 않으므로 현재 디렉토리를 기준으로 찾는다.
+// 7. 패스가 없고 해당 디렉토리에 없다 -> is a directory
+// 8. 패스가 없고 해당 디렉토리에 파일이 있는데 권한이 없다 -> permission denied 
+// 5. 해당 파일이 존재하고 권한이 있으면 라인 한줄 한줄을 입력으로 받아서 순차적으로 실행해준다...
+
+// 패스가 존재하고 해당 패스에 없다 -> command not found
+// 패스가 존재하고 해당 패스에 있다 -> permission denied | 해당 파일이 쉘 스크립트거나 주소가 아니면 command not found
+// 패스가 없고 해당 디렉토리에 없다. -> is a directory
+// 패스가 없고 해당 디렉토리에 있다. -> permission denied | 해당 파일이 쉘 스크립트거나 주소가 아니면 command not found

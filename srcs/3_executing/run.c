@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:49:29 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/25 12:42:49 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 13:43:14 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	child_process(t_command *cmd, t_info *info)
 	set_fd(cmd);
 	if (cmd->cmd_path == NULL && cmd->builtin_type == NOTBUILTIN)
 	{
-		printf("%s\n", cmd->cmd);
+		printf("커맨드 낫파운듯");
 		ft_fprintf(STDERR_FILENO,
 			"minishell: %s: command not found\n", cmd->cmd);
 		exit(127);
@@ -29,6 +29,7 @@ static void	child_process(t_command *cmd, t_info *info)
 		else
 		{
 			valid_cmd_path(cmd->cmd_path);
+			printf("cmd->cmd_path %s\n", cmd->cmd_path); 
 			if (execve(cmd->cmd_path, cmd->args, info->dup_envp) == -1)
 			{
 				perror(cmd->cmd_path);
