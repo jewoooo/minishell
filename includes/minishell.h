@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 11:04:52 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/25 18:52:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ t_bool		env_is_existed(char	*arg, char **envp, char *ptr);
 void		builtins_export(t_command *cmd, t_info *info);
 void		print_export(t_info *info);
 int			change_env(char *arg, t_list *env_lst, char *ptr);
-void		export_fprintf_err(t_command *cmd, char *s, t_info *info);
+void		export_fprintf_err(char *s, t_info *info);
+
+/* 05_exit */
+void	ft_exit(t_info *info, int exit_status);
 
 #endif

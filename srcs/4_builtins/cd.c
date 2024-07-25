@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:39:49 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 10:55:33 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/25 19:17:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*load_dir(t_info *info, t_command *cmd)
 		if (!home)
 		{
 			write(STDERR_FILENO, "cd : HOME not set\n", 19);
+			info->exit_status = FAIL;
 			return (NULL);
 		}
 		return (ft_strdup(home));
@@ -86,10 +87,14 @@ void	builtins_cd(t_info *info, t_command *cmd)
 {
 	char	*dir;
 
+	info->exit_status = SUCCESS;
 	dir = load_dir(info, cmd);
 	if (!dir)
 		return ;
 	if (!ft_chdir(info, dir))
+	{
 		ft_fprintf(STDERR_FILENO, "No such file or directory\n");
+		info->exit_status = FAIL;
+	}
 	sfree(dir);
 }

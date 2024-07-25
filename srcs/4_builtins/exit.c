@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtins_exit.c                                 :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 22:03:05 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 15:21:42 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 14:59:57 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	builtins_exit(t_command *cmd, t_info *info)
 {
 	printf("exit\n");
 	if (cmd->args[1] == NULL)
-		exit(1);
+		exit(SUCCESS);
 	if (check_args(cmd->args[1]) != TRUE)
 	{
 		ft_fprintf(STDERR_FILENO,
@@ -98,10 +98,7 @@ void	builtins_exit(t_command *cmd, t_info *info)
 	if (cmd->args[2] != NULL)
 	{
 		ft_fprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
-		if (cmd->is_parent != TRUE)
-			exit(1);
-		else
-			info->exit_status = FAIL;
+		info->exit_status = FAIL;
 	}
 	else
 		exit_process(cmd->args[1]);

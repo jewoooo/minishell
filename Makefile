@@ -6,7 +6,7 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 23:57:57 by jewlee            #+#    #+#              #
-#    Updated: 2024/07/24 14:37:46 by jewlee           ###   ########.fr        #
+#    Updated: 2024/07/25 18:52:17 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS			=		./srcs/minishell.c						\
 						./srcs/4_builtins/unset.c				\
 						./srcs/4_builtins/export/export.c		\
 						./srcs/4_builtins/export/utils.c		\
+						./srcs/5_exit/exit.c					\
 
 
 OBJ				=		$(SRCS:.c=.o)

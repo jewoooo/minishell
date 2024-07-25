@@ -6,14 +6,38 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/25 13:26:20 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 19:34:12 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// token_lst_printf(info->token);
-// cmd_lst_printf(info->cmd);
+int	global_sig;
+
+void	handle_sigpipe(int sig)
+{
+	if (sig == SIGPIPE)
+	{
+		global_sig = SIGPIPE;
+		ft_fprintf(STDERR_FILENO, " Broken pipe\n");
+		exit(SIGPIPE);
+	}
+}
+
+void	valid_out_pipe(t_info *info)
+{
+	signal(SIGPIPE, handle_sigpipe);
+	if (global_sig != SIGPIPE)
+		write(STDOUT_FILENO, "", 0);
+	if (global_sig == SIGPIPE)
+	{
+		write(STDERR_FILENO, "minishell$ ", 11);
+		info->line = get_next_line(STDIN_FILENO);
+	}
+	else
+		info->line = readline("minishell$ ");
+}
+
 t_status	ft_minishell(t_info *info)
 {
 	info->token = ft_tokenize(info->line, info->dup_envp, info->exit_status);
@@ -37,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	while (TRUE)
 	{
 		init_signal(&info);
-		info.line = readline("minishell$ ");
+		valid_out_pipe(&info);
 		if (info.line == NULL)
 		{
 			ft_putstr_fd("exit\n", STDOUT_FILENO);

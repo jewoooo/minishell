@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 15:47:58 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/23 10:35:03 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/25 14:56:38 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ static t_bool	unset_is_valid_name(char *s, t_info *info)
 {
 	if (!(*s == '_' || ft_isalpha(*s)))
 	{
-		info->exit_status = FAIL;
 		ft_fprintf(STDERR_FILENO,
 			"minishell: unset: `%s': not a valid identifier\n", s);
+		info->exit_status = FAIL;
 		return (FALSE);
 	}
 	while (*s != '\0')
 	{
 		if (!(*s == '_' || ft_isalnum(*s)))
 		{
-			info->exit_status = FAIL;
 			ft_fprintf(STDERR_FILENO,
 				"minishell: unset: `%s': not a valid identifier\n", s);
+			info->exit_status = FAIL;
 			return (FALSE);
 		}
 		s++;
@@ -109,6 +109,4 @@ void	builtins_unset(t_command *cmd, t_info *info)
 		if (info->dup_envp == NULL)
 			exit(FAIL);
 	}
-	if (cmd->is_parent != TRUE)
-		exit(info->exit_status);
 }

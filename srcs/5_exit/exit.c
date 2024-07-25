@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/06 17:24:11 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/25 18:54:13 by jewlee           ###   ########.fr       */
+/*   Created: 2024/07/25 15:53:08 by minhulee          #+#    #+#             */
+/*   Updated: 2024/07/25 18:51:44 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-extern int	global_sig;
+//void	ft_err(int exit_status)
+//{
 
-void	builtins_pwd(t_info *info)
+//}
+
+void	ft_exit(t_info *info, int exit_status)
 {
-	char	cwd[PATH_MAX];
-
-	if (global_sig == SIGPIPE)
-	{
-		// perror("bash: pwd: write error");
-		ft_fprintf(STDERR_FILENO, " Broken pipe\n");
-		ft_exit(info, SIGPIPE);
-	}
-	info->exit_status = SUCCESS;
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-	{
-		perror("getcwd");
-		info->exit_status = FAIL;
-	}
-	else
-		printf("%s\n", cwd);
+	info->exit_status = exit_status;
+	exit(exit_status);
 }
