@@ -6,22 +6,22 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/24 16:27:10 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:39:43 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// token_lst_printf(info->token);
-// cmd_lst_printf(info->cmd);
 t_status	ft_minishell(t_info *info)
 {
 	info->token = ft_tokenize(info->line, info->dup_envp, info->exit_status);
 	if (info->token == NULL)
 		return (FAIL);
+	token_lst_printf(info->token);
 	info->cmd = ft_parse(info->token, &(info->total_heredoc_cnt));
 	if (info->cmd == NULL)
 		return (FAIL);
+	cmd_lst_printf(info->cmd);
 	ft_execute(info);
 	return (SUCCESS);
 }

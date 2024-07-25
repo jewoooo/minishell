@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:49:29 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/24 16:40:37 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:42:49 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	child_process(t_command *cmd, t_info *info)
 	set_fd(cmd);
 	if (cmd->cmd_path == NULL && cmd->builtin_type == NOTBUILTIN)
 	{
+		printf("%s\n", cmd->cmd);
 		ft_fprintf(STDERR_FILENO,
 			"minishell: %s: command not found\n", cmd->cmd);
 		exit(127);

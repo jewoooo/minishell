@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:59:58 by minhulee          #+#    #+#             */
-/*   Updated: 2024/07/24 16:12:51 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:37:35 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init_index(t_index *index)
 {
 	index->start = 0;
 	index->ptr = 0;
+	index->flag = FALSE;
 }
 
 char	*handle_single_quote(char *line, char *res, t_index *index)

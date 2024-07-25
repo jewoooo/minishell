@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 02:40:32 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/24 16:13:47 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:36:45 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_index
 {
 	int		start;
 	int		ptr;
+	t_bool	flag;
 }	t_index;
 
 typedef struct s_token

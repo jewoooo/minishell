@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 22:15:39 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/24 16:13:01 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:37:23 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,18 @@ char	*substitute_env(char *line, t_token_info *info)
 {
 	t_index	idx;
 	char	*res;
-	t_bool	flag;
 
 	init_index(&idx);
-	flag = FALSE;
 	res = NULL;
 	while (line[idx.ptr] != '\0')
 	{
-		if (line[idx.ptr] == '\'' && !flag)
+		if (line[idx.ptr] == '\'' && !idx.flag)
+		{
 			res = handle_single_quote(line, res, &idx);
+			continue ;
+		}
 		else if (line[idx.ptr] == '\"')
-			flag = !flag;
+			idx.flag = !idx.flag;
 		else if (line[idx.ptr] == '$')
 		{
 			res = handle_dollar(line, res, &idx, info);
