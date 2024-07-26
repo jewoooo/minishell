@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 16:41:02 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/25 18:54:51 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/26 15:15:35 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static void	print_args_with_flag(t_command *cmd)
 	{
 		while (cmd->args[++i] != NULL)
 		{
-			printf("%s", cmd->args[i]);
+			ft_fprintf(STDOUT_FILENO, "%s", cmd->args[i]);
 			if (cmd->args[i + 1] != NULL)
-				printf(" ");
+				ft_fprintf(STDOUT_FILENO, " ");
 		}
 	}
 	else
@@ -55,11 +55,11 @@ static void	print_args_with_flag(t_command *cmd)
 		i = 0;
 		while (cmd->args[++i] != NULL)
 		{
-			printf("%s", cmd->args[i]);
+			ft_fprintf(STDOUT_FILENO, "%s", cmd->args[i]);
 			if (cmd->args[i + 1] != NULL)
-				printf(" ");
+				ft_fprintf(STDOUT_FILENO, " ");
 		}
-		printf("\n");
+		ft_fprintf(STDOUT_FILENO, "\n");
 	}
 }
 
@@ -72,7 +72,7 @@ void	builtins_echo(t_command *cmd, t_info *info)
 	}
 	info->exit_status = SUCCESS;
 	if (cmd->args[1] == NULL)
-		printf("\n");
+		ft_fprintf(STDOUT_FILENO, "\n");
 	else
 		print_args_with_flag(cmd);
 }
