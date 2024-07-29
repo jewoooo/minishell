@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_fd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minhulee <minhulee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minhulee <minhulee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 17:30:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/22 19:09:18 by minhulee         ###   ########seoul.kr  */
+/*   Updated: 2024/07/27 13:49:50 by minhulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ void	set_file_fd(t_command *cmd)
 	}
 }
 
-void	set_fd(t_command *cmd)
-{
-	set_pipe_fd(cmd);
-	set_redirect_fd(cmd);
-	set_file_fd(cmd);
-}
-
 void	restore_std_fd(t_command *cmd)
 {
 	if (cmd->infile_fd != NONE)
@@ -64,4 +57,11 @@ void	restore_std_fd(t_command *cmd)
 		dup2(cmd->saved_stdout, STDOUT_FILENO);
 		close(cmd->saved_stdout);
 	}
+}
+
+void	set_fd(t_command *cmd)
+{
+	set_pipe_fd(cmd);
+	set_redirect_fd(cmd);
+	set_file_fd(cmd);
 }

@@ -6,19 +6,19 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:56:53 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/27 13:27:06 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 19:34:12 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_sig;
+int	global_sig;
 
 void	handle_sigpipe(int sig)
 {
 	if (sig == SIGPIPE)
 	{
-		g_sig = SIGPIPE;
+		global_sig = SIGPIPE;
 		ft_fprintf(STDERR_FILENO, " Broken pipe\n");
 		exit(SIGPIPE);
 	}
@@ -27,9 +27,9 @@ void	handle_sigpipe(int sig)
 void	valid_out_pipe(t_info *info)
 {
 	signal(SIGPIPE, handle_sigpipe);
-	if (g_sig != SIGPIPE)
+	if (global_sig != SIGPIPE)
 		write(STDOUT_FILENO, "", 0);
-	if (g_sig == SIGPIPE)
+	if (global_sig == SIGPIPE)
 	{
 		write(STDERR_FILENO, "minishell$ ", 11);
 		info->line = get_next_line(STDIN_FILENO);

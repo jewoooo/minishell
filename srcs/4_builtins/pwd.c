@@ -6,20 +6,21 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 17:24:11 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/27 13:25:24 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/25 18:54:13 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-extern int	g_sig;
+extern int	global_sig;
 
 void	builtins_pwd(t_info *info)
 {
 	char	cwd[PATH_MAX];
 
-	if (g_sig == SIGPIPE)
+	if (global_sig == SIGPIPE)
 	{
+		// perror("bash: pwd: write error");
 		ft_fprintf(STDERR_FILENO, " Broken pipe\n");
 		ft_exit(info, SIGPIPE);
 	}

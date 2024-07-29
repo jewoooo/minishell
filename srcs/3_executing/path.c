@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 12:27:12 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/25 14:57:48 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/29 14:50:59 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ static char	*get_cmd_path(char **path, char *path_cmd)
 			exit(FAIL);
 		if (access(find, F_OK) == 0)
 		{
-			free(path_cmd);
+			if (is_dir(find) == TRUE)
+			{
+				free(find);
+				return (NULL);
+			}
 			return (find);
 		}
 		free(find);
 	}
-	free(path_cmd);
 	return (NULL);
 }
 
@@ -68,14 +71,13 @@ static char	*find_cmd_path(char **path, char *cmd)
 
 	if (cmd == NULL || ft_strlen(cmd) == 0)
 		return (NULL);
-	if (check_relative_path(cmd) == TRUE)
-		return (ft_strdup(cmd));
-	if (access(cmd, X_OK) == 0)
+	if (!path || check_relative_path(cmd) == TRUE)
 		return (ft_strdup(cmd));
 	path_cmd = ft_strjoin("/", cmd);
 	if (path_cmd == NULL)
 		exit(FAIL);
 	find = get_cmd_path(path, path_cmd);
+	free(path_cmd);
 	return (find);
 }
 
@@ -87,14 +89,12 @@ void	get_path(char **path, t_command **cmd)
 	while (tmp != NULL)
 	{
 		tmp->cmd_path = find_cmd_path(path, tmp->cmd); // -> PATH 환경변수에서 찾아보고
-		// './args[0]'
-		// execve -> 파일이 있는가? | 실행이가능한가? | 
 		tmp = tmp->next;
 	}
 }
 
 // 1. 패스를 토대로 해당 파일이 있는지 확인한다.
-// 2. 만약 패스가 없다면 현재 디렉토리를 기준으로 확인한다.
+// 2. 만약 패스에 없다면 현재 디렉토리를 기준으로 확인한다.
 // 3. 1 -> 해당 파일이 없다면 -> command not found
 // 4. 해당 파일이 존재하고 권한이 없다면 -> permissin denied | (execve)command not found
 // 5. 해당 파일이 존재하고 권한이 있으면 라인 한줄 한줄을 입력으로 받아서 순차적으로 실행해준다...

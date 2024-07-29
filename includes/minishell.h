@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 23:57:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/27 13:27:23 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/27 15:17:19 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ char		*find_path(char **envp);
 void		run_commands(t_info *info, t_command *cmd, int *cnt);
 
 /* vaild */
+t_bool		is_dir(char *path);
+void		valid_redirects_path(char *path);
 void		valid_cmd_path(char *cmd_path);
 
 /* clear */
@@ -116,6 +118,6 @@ char		*export_extract_name(char *env);
 void		change_env(char *arg, t_list *env_lst, char *arg_name);
 
 /* 05_exit */
-void		ft_exit(t_info *info, int exit_status);
+void	ft_exit(t_info *info, int exit_status);
 
 #endif

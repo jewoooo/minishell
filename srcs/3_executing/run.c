@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minhulee <minhulee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:49:29 by jewlee            #+#    #+#             */
-/*   Updated: 2024/07/27 13:26:33 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/07/27 13:52:14 by minhulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 static void	child_process(t_command *cmd, t_info *info)
 {
 	set_fd(cmd);
-	if (cmd->cmd_path == NULL && cmd->builtin_type == NOTBUILTIN)
+	if (cmd->builtin_type != NOTBUILTIN)
+	{
+		ft_builtins(cmd, info);
+		exit(info->exit_status);
+	}
+	if (!cmd->cmd_path)
 	{
 		ft_fprintf(STDERR_FILENO,
 			"minishell: %s: command not found\n", cmd->cmd);
@@ -23,23 +28,15 @@ static void	child_process(t_command *cmd, t_info *info)
 	}
 	else
 	{
-		if (cmd->builtin_type != NOTBUILTIN)
+		valid_cmd_path(cmd->cmd_path);
+		if (execve(cmd->cmd_path, cmd->args, info->dup_envp) == -1)
 		{
-			ft_builtins(cmd, info);
-			exit(info->exit_status);
+			perror(cmd->cmd_path);
+			ft_fprintf(STDERR_FILENO, "execve() error\n");
+			exit(FAIL);
 		}
-		else
-		{
-			valid_cmd_path(cmd->cmd_path);
-			if (execve(cmd->cmd_path, cmd->args, info->dup_envp) == -1)
-			{
-				perror(cmd->cmd_path);
-				ft_fprintf(STDERR_FILENO, "execve() error\n");
-				exit(FAIL);
-			}
-		}
-		exit(SUCCESS);
 	}
+	exit(SUCCESS);
 }
 
 static void	parent_process(t_command *cmd)
